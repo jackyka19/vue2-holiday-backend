@@ -1,0 +1,23 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: vue2-holiday-backend
+  datasource:
+    url: jdbc:mysql://localhost:3306/carstore_project?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=utf8
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.example.vue2holidaybackend.entity
+  configuration:
+    map-underscore-to-camel-case: true
+
+# 日誌（開發時可開啟）
+logging:
+  level:
+    com.example.vue2holidaybackend.mapper: debug   # ← 改成你實際的包名
+    org.mybatis: debug

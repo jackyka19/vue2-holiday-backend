@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.vue2holidaybackend.mapper.HolidayDetailMapper">
+
+    <insert id="batchInsert">
+        INSERT INTO holiday_detail (config_id, name, start_date, end_date)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.configId}, #{item.name}, #{item.startDate}, #{item.endDate})
+        </foreach>
+    </insert>
+
+    <select id="findByConfigId" resultType="HolidayDetail">
+        SELECT * FROM holiday_detail WHERE config_id = #{configId}
+    </select>
+
+    <delete id="deleteByConfigId">
+        DELETE FROM holiday_detail WHERE config_id = #{configId}
+    </delete>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO holiday_detail (config_id, name, start_date, end_date)
+        VALUES (#{configId}, #{name}, #{startDate}, #{endDate})
+    </insert>
+
+    <update id="update">
+        UPDATE holiday_detail
+        SET name = #{name},
+            start_date = #{startDate},
+            end_date = #{endDate}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM holiday_detail WHERE id = #{id}
+    </delete>
+
+</mapper>

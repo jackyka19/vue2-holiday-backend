@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.vue2holidaybackend.mapper.HolidayConfigMapper">
+
+    <resultMap id="configResultMap" type="HolidayConfig">
+        <id property="id" column="id"/>
+        <result property="year" column="year"/>
+        <result property="configName" column="config_name"/>
+        <result property="weekendDays" column="weekend_days"/>
+        <result property="publicHolidays" column="public_holidays"/>
+        <result property="totalDays" column="total_days"/>
+        <result property="status" column="status"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <collection property="holidays"
+                    ofType="HolidayDetail"
+                    select="com.example.vue2holidaybackend.mapper.HolidayDetailMapper.findByConfigId"
+                    column="id"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="configResultMap">
+        SELECT * FROM holiday_config ORDER BY year DESC
+    </select>
+
+    <select id="findById" resultMap="configResultMap">
+        SELECT * FROM holiday_config WHERE id = #{id}
+    </select>
+
+    <select id="findByYear" resultMap="configResultMap">
+        SELECT * FROM holiday_config WHERE year = #{year}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO holiday_config (year, config_name, weekend_days, public_holidays, total_days, status)
+        VALUES (#{year}, #{configName}, #{weekendDays}, #{publicHolidays}, #{totalDays}, #{status})
+    </insert>
+
+    <update id="update">
+        UPDATE holiday_config
+        SET config_name = #{configName},
+            weekend_days = #{weekendDays},
+            public_holidays = #{publicHolidays},
+            total_days = #{totalDays},
+            status = #{status},
+            update_time = NOW()
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM holiday_config WHERE id = #{id}
+    </delete>
+
+</mapper>

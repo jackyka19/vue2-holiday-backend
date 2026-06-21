@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.vue2holidaybackend.mapper.CarUsageMapper">
+
+    <resultMap id="carUsageMap" type="com.example.vue2holidaybackend.entity.CarUsage">
+        <id property="id" column="id"/>
+        <result property="usageDate" column="usage_date"/>
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="startLocation" column="start_location"/>
+        <result property="endLocation" column="end_location"/>
+        <result property="isHoliday" column="is_holiday"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="carUsageMap">
+        SELECT * FROM car_usage ORDER BY usage_date DESC, start_time DESC
+    </select>
+
+    <select id="findById" resultMap="carUsageMap">
+        SELECT * FROM car_usage WHERE id = #{id}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO car_usage (usage_date, start_time, end_time, start_location, end_location, is_holiday)
+        VALUES (#{usageDate}, #{startTime}, #{endTime}, #{startLocation}, #{endLocation}, #{isHoliday})
+    </insert>
+
+    <update id="update">
+        UPDATE car_usage
+        SET usage_date = #{usageDate},
+            start_time = #{startTime},
+            end_time = #{endTime},
+            start_location = #{startLocation},
+            end_location = #{endLocation},
+            is_holiday = #{isHoliday}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM car_usage WHERE id = #{id}
+    </delete>
+</mapper>
